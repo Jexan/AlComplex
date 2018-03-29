@@ -10,7 +10,7 @@ def use_j(option):
 
 def real_to_complex(z):
 	if not isinstance(z, Complex):
-		return Complex(z,0)
+		return Complex(z.real,z.imag)
 	else:
 		return z
 
