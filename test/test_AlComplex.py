@@ -1,33 +1,33 @@
 import unittest
 from AlComplex import * 
 
-a = Complex(0,1)
-b = Complex(1,0)
-c = Complex(1,1)
-d = Complex(2,3)
-e = Complex(1)
+a = AlComplex(0,1)
+b = AlComplex(1,0)
+c = AlComplex(1,1)
+d = AlComplex(2,3)
+e = AlComplex(1)
 
 class TestFuncs(unittest.TestCase):
 	def test_initiation(self):
 
 		self.assertEqual(C(0,1), a)
-		self.assertEqual(Complex(0,1), a)
+		self.assertEqual(AlComplex(0,1), a)
 
 		self.assertEqual(a+b, c)
-		self.assertEqual(a-b, Complex(-1,1))
+		self.assertEqual(a-b, AlComplex(-1,1))
 
-	def test_Complex_division_multiplication_and_potentiation(self):
-		self.assertEqual(d*d, Complex(-5,12))
+	def test_AlComplex_division_multiplication_and_potentiation(self):
+		self.assertEqual(d*d, AlComplex(-5,12))
 		self.assertEqual(C(1,0)*C(0,1), C(0,1))
 
 		self.assertEqual(i/i, 1)
 		self.assertEqual(1/i, -i)
 
 		self.assertEqual(i**2, -1)
-		self.assertEqual((-1)**Complex(0,3), exp(-m.pi*3))
+		self.assertEqual((-1)**AlComplex(0,3), exp(-m.pi*3))
 		self.assertEqual((-i)**i, exp(m.pi/2))
 
-	def test_Complex_ops_plays_nicely_with_Python_native_types(self):
+	def test_AlComplex_ops_plays_nicely_with_Python_native_types(self):
 		self.assertEqual(3*C(9,8), C(27,24))
 		
 		self.assertEqual(j+4, C(4,1))
@@ -35,21 +35,21 @@ class TestFuncs(unittest.TestCase):
 		self.assertEqual(j+m.sqrt(4.123), C(m.sqrt(4.123),1))
 		self.assertEqual(3 + 1.j + a, C(3, 2))
 
-		self.assertEqual(Complex(900)*4, Complex(3600))
+		self.assertEqual(AlComplex(900)*4, AlComplex(3600))
 		self.assertEqual((3-i)/(2+3*i)+(2-2*i)/(1-5*i), 9/13 - 7/13*i)
 		
 		self.assertEqual(C(4)**1/2, 2)
 		
 	def test_polar(self):
-		self.assertEqual(Complex.polar(1,0), Complex(1,0))
-		self.assertEqual(Complex.polar(1,m.pi/2), i)
+		self.assertEqual(AlComplex.polar(1,0), AlComplex(1,0))
+		self.assertEqual(AlComplex.polar(1,m.pi/2), i)
 
 	def test_exp(self):
 		self.assertEqual(exp(1), m.exp(1))
 		self.assertEqual(exp(0), 1)
 		self.assertEqual(exp(0+m.pi*i), -1)
 		self.assertEqual(exp(m.log(3) - m.pi/2*i), C(0,-3))
-		self.assertEqual(4*exp(m.pi/4*i), Complex.polar(4, m.pi/4))
+		self.assertEqual(4*exp(m.pi/4*i), AlComplex.polar(4, m.pi/4))
 		self.assertEqual(exp(m.pi*1.j), -1)
 
 	def test_Ln(self):
@@ -80,13 +80,13 @@ class TestFuncs(unittest.TestCase):
 		self.assertEqual(sinh(c), -i*sin(i*c))
 		self.assertEqual(cosh(d), cos(d*i))
 
-	def test_roots(self):
-		l1 = list(roots(1, 3))
-		l2 = list(roots(1.j, 2))
-		l5 = list(roots(i+2, 10))
+	def test_int_roots(self):
+		l1 = list(int_roots(1, 3))
+		l2 = list(int_roots(1.j, 2))
+		l5 = list(int_roots(i+2, 10))
 
 		with self.assertRaises(Exception):
-			list(roots(i, 0))
+			list(int_roots(i, 0))
 
 		self.assertEqual(len(l1), 3)
 		self.assertEqual(len(l5), 10)
@@ -111,3 +111,17 @@ class TestFuncs(unittest.TestCase):
 		self.assertIn(-3*m.pi/2*i, l3)
 		self.assertIn(m.pi/2*i, l3)
 		self.assertIn(5*m.pi/2*i, l3)
+
+	def test_lone_methods_with_Python_number_types(self):
+		# Conjugate
+		self.assertEqual(conjugate(1), 1)
+		self.assertEqual(conjugate(3.j), -3.j)
+
+		# Modulus
+		self.assertEqual(modulus(2), 2)
+		self.assertEqual(modulus(2.34), 2.34)
+		self.assertEqual(modulus(3 + 4.j), 5)
+
+		# Phase
+		self.assertEqual(phase(3), 0)
+		self.assertEqual(phase(1.j), m.pi/2)

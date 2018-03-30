@@ -3,15 +3,15 @@ A Complex Number library. It uses its own complex number implementation. Its mai
 It's as simple as:
 
 ```
->>> from AlComplex import I, Complex, pi
+>>> from AlComplex import I, AlComplex, pi
 >>> 2 + 3*I
 2.0 + 3.0i
->>> Complex(2,3)
+>>> AlComplex(2,3)
 2.0 + 3.0i
->>> Complex(1)
+>>> AlComplex(1)
 1.0 + 0.0i
 >>> # You can also use Polar Coordinates
->>> Complex.polar(2, pi)
+>>> AlComplex.polar(2, pi)
 0 - 2i
 ``` 
 
@@ -37,7 +37,7 @@ Note that since Floats behave weirdly, we use relative equality. Two Complex num
 True
 ```
 
-Complex objects have a basic but complete API:
+AlComplex objects have a basic but complete API:
 
 ```
 >>> z = 1 + I
@@ -49,11 +49,11 @@ Complex objects have a basic but complete API:
 1.4142135623730951
 >>> z.phase()
 0.7853981633974483
->>> z.polar_coord()
+>>> z.to_polar()
 (1.4142135623730951, 0.7853981633974483)
->>> z.rect_coord()
+>>> z.to_rect_coord()
 (1,1)
->>> z.conj()
+>>> z.conjugate()
 1 - i
 ```
 
@@ -65,7 +65,7 @@ z.phase() == z.arg() == z.angle() == phase(z)
 z.abs() == z.magnitude() == z.module() == abs(z) == module(z)
 z.real == real(z)
 z.imag == imaginary(z)
-z.conj() == conjugate(z)
+z.conjugate() == conjugate(z)
 ``` 
 
 There's also basic math functions, optimized for Complex objects. 
@@ -118,16 +118,16 @@ You can set representation of complex numbers with j, if you prefer.
 There's also partial support for multiple valued functions. They all create generators.
 
 ```
->>> from AlComplex import roots, ln_values
+>>> from AlComplex import int_roots, ln_values
 >>> from math import pi
->>> list(roots(I, 3))
+>>> list(int_roots(I, 3))
 [0.866025403784439 + 0.5i, -0.866025403784438 + 0.5i, 0.0 - 1.0i]
 >>> # Gives log(z.abs()) + (z.phase() + 2*pi*n)*I, where n takes the values from 0 to 2
 >>> list(ln_values(I, 0, 3))
 [0.0 + 1.5707963267948966i, 0.0 + 7.853981633974483i, 0.0 + 14.137166941154069i]
 ```
 
-Currently only roots of a function and complex logarithm are supported. More to come. 
+Currently only int_roots of a function and complex logarithm are supported. More to come. 
 
 You can also get the n-th value of the log directly
 
