@@ -7,7 +7,6 @@ version = "1.0.1",
 description = "Complex Variable Library",
 author = "Jean Franco Gómez",
 author_email = "JeanFGomezR@gmail.com",
-url = "nope.com",
 
 long_description = """ An Alternative Complex Numbers
 Library. Inspired in the Ruby standard library complex numbers. 

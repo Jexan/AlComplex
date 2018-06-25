@@ -8,24 +8,26 @@ d = AlComplex(2,3)
 e = AlComplex(1)
 
 class TestFuncs(unittest.TestCase):
-	def test_initiation(self):
-
+	def test_initiation_and_equality(self):
 		self.assertEqual(C(0,1), a)
 		self.assertEqual(AlComplex(0,1), a)
 
+	def test_AlComplex_addition(self):
 		self.assertEqual(a+b, c)
 		self.assertEqual(a-b, AlComplex(-1,1))
 
-	def test_AlComplex_division_multiplication_and_potentiation(self):
+	def test_AlComplex_multiplication(self):
 		self.assertEqual(d*d, AlComplex(-5,12))
 		self.assertEqual(C(1,0)*C(0,1), C(0,1))
 
-		self.assertEqual(i/i, 1)
-		self.assertEqual(1/i, -i)
-
+	def test_AlComplex_potentiation(self):
 		self.assertEqual(i**2, -1)
 		self.assertEqual((-1)**AlComplex(0,3), exp(-m.pi*3))
 		self.assertEqual((-i)**i, exp(m.pi/2))
+
+	def test_AlComplex_division(self):
+		self.assertEqual(i/i, 1)
+		self.assertEqual(AlComplex(1,0)/i, -i)
 
 	def test_AlComplex_ops_plays_nicely_with_Python_native_types(self):
 		self.assertEqual(3*C(9,8), C(27,24))
@@ -40,7 +42,7 @@ class TestFuncs(unittest.TestCase):
 		
 		self.assertEqual(C(4)**1/2, 2)
 		
-	def test_polar(self):
+	def test_polar_initialization(self):
 		self.assertEqual(AlComplex.polar(1,0), AlComplex(1,0))
 		self.assertEqual(AlComplex.polar(1,m.pi/2), i)
 
@@ -63,18 +65,20 @@ class TestFuncs(unittest.TestCase):
 		self.assertEqual(C(4)**-1, 1/4)
 		self.assertEqual(1.j**-1, -i)
 
-	def test_trignonometric(self):
+	def test_trigonometric_sin_cos_tan(self):
 		self.assertEqual(sin(0), 0)
 		self.assertEqual(sin(m.pi/2), 1)
+		self.assertEqual(sin(4*i), 1/2*(m.exp(4)-m.exp(-4))*i)
+		
 		self.assertEqual(cos(0), 1)
 		self.assertEqual(cos(m.pi), -1)
+		
 		self.assertEqual(tan(0), 0)
 		self.assertEqual(tan(1+i), sin(1+i)/cos(1+i))
 		self.assertEqual(tan(m.pi/4), 1)
 		self.assertEqual(tan(1+1.j), sin(1+1.j)/cos(1+1.j))
 
-		self.assertEqual(sin(4*i), 1/2*(m.exp(4)-m.exp(-4))*i)
-
+	def self_hyperbolic_trigonometric_sinh_cosh(self):
 		self.assertEqual(-i*sinh(i*a), sin(a))
 		self.assertEqual(cos(b), cosh(i*b))
 		self.assertEqual(sinh(c), -i*sin(i*c))
@@ -94,11 +98,12 @@ class TestFuncs(unittest.TestCase):
 		self.assertEqual(l2[1]**2, i)
 		self.assertEqual(l5[3]**10,i+2)
 
-	def test_ln(self):
+	def test_ln_n_branch(self):
 		self.assertEqual(ln_n_branch(1,0), 0)
 		self.assertEqual(ln_n_branch(exp(4+i), 0), 4+i)
 		self.assertEqual(ln_n_branch(exp(4+i), 1), 4+i+2*m.pi*i)
 
+	def test_ln_values(self):
 		l1 = list(ln_values(i+12, 3, 7))
 		l2 = list(ln_values(i, 6, 2))
 		l3 = list(ln_values(i, -2, 3))
