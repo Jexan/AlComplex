@@ -1,3 +1,5 @@
+# AlComplex
+
 A Complex Number library. It uses its own complex number implementation. Its main goal it's to provide a more complete API, compared to the default complex number implementation in Python.
 
 It's as simple as:
@@ -14,6 +16,16 @@ It's as simple as:
 >>> AlComplex.polar(2, pi)
 0 - 2i
 ``` 
+
+## Installation
+
+Just run
+
+``` pip install AlComplex ```
+
+It has no external dependencies. 
+
+## Details
 
 Basic operations with complex and real numbers are supported
 
