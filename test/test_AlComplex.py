@@ -83,6 +83,14 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(imaginary(1.j), 1)
 		self.assertEqual(imaginary(4 + 3.j), 3)
 
+	def test_sqrt(self):
+		self.assertEqual(sqrt(a), a**.5)
+		self.assertEqual(sqrt(C(-1)), i)
+		self.assertEqual(sqrt(C(4)), 2)
+
+		self.assertEqual(sqrt(4), 2)
+		self.assertEqual(sqrt(-1), 1.j)
+
 	def test_exp(self):
 		self.assertEqual(exp(1), m.exp(1))
 		self.assertEqual(exp(0), 1)
