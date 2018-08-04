@@ -9,7 +9,7 @@ Also, all the overhead has been suppressed as much as possible.
 
 import math as m
 import cmath as cm
-
+from itertools import chain
 
 def use_j(option=True):
     """ Changes the letter used to represent the imaginary unit.
@@ -499,9 +499,9 @@ def int_roots(z, n, include_self=False):
     include_self : bool, optional
         Whether z itself will be yield.
 
-    Yields
+    Returns
     ------
-    AlComplex
+    A generator that yields AlComplex
 
     Raises
     ------
@@ -519,10 +519,10 @@ def int_roots(z, n, include_self=False):
 
     growth = 2*m.pi/n
 
-    if include_self: yield z
+    first_value = (z) if include_self else ()
+    values_generator = (AlComplex.polar(magnitude, arg+k*growth) for k in range(n))
 
-    for k in range(n):
-        yield AlComplex.polar(magnitude, arg+k*growth)
+    return chain(first_value, values_generator)
 
 
 def ln_values(z, n_start=0, n_finish=None):
@@ -587,7 +587,7 @@ def ln_n_branch(z, n):
     AlComplex
     """
     if not isinstance(n, int):
-        raise ValueError('Expected function argument to be an integer. Got {} instead'.format(n_start))
+        raise ValueError('Expected function argument to be an integer. Got {} instead'.format(n))
 
     return Ln(z) + 2*m.pi*n*i
 
