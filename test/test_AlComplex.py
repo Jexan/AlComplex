@@ -245,6 +245,19 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(phase(1.j), m.pi/2)
 
 class TestAlComplexClassMethods(unittest.TestCase):
+	def test_modulus_abs_magnitude(self):
+		self.assertEqual(a.modulus(), 1.0)
+		self.assertEqual(b.abs(), 1.0)
+		self.assertEqual(c.magnitude(), sqrt(2))
+		self.assertEqual(abs(e), 1.0)
+
+	def test_to_rect_coord(self):
+		self.assertEqual(a.to_rect_coord(), (0, 1))
+		self.assertEqual(b.to_rect_coord(), (1, 0))
+		self.assertEqual(c.to_rect_coord(), (1, 1))
+		self.assertEqual(d.to_rect_coord(), (2, 3))
+		self.assertEqual(e.to_rect_coord(), (1, 0))
+
 	def test_to_float_raises_TypeError_if_imaginary_part_not_zero(self):
 		with self.assertRaises(TypeError):
 			d.to_float()	
