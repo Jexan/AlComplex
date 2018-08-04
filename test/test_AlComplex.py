@@ -166,6 +166,19 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(coth(a+b), 1/tanh(a+b))
 		self.assertEqual(coth(4*i), csch(4*i)/sech(4*i))
 
+	def test_inverse_trig_asin_acos_atan(self):
+		self.assertEqual(asin(0), 0)
+		self.assertEqual(asin(1), m.pi/2)
+		self.assertEqual(asin(C(2,3)), cm.asin(2+3.j))
+
+		self.assertEqual(acos(0), m.pi/2)
+		self.assertEqual(acos(1), 0)
+		self.assertEqual(acos(C(2,3)), cm.acos(2+3.j))
+
+		self.assertEqual(atan(1), m.pi/4)
+		self.assertEqual(atan(0), 0)
+		self.assertEqual(atan(C(2,3)), cm.atan(2+3.j))
+
 	def test_int_roots(self):
 		l1 = list(int_roots(1, 3))
 		l2 = list(int_roots(1.j, 2))
