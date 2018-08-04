@@ -179,6 +179,11 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(atan(0), 0)
 		self.assertEqual(atan(C(2,3)), cm.atan(2+3.j))
 
+	def test_inverse_hyper_trig_asinh_acosh_atanh(self):
+		self.assertEqual(acosh(2+3.j), cm.acosh(2+3.j))
+		self.assertEqual(asinh(2+3.j), cm.asinh(2+3.j))
+		self.assertEqual(atanh(2+3.j), cm.atanh(2+3.j))
+
 	def test_int_roots(self):
 		l1 = list(int_roots(1, 3))
 		l2 = list(int_roots(1.j, 2))
