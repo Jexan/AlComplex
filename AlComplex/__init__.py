@@ -254,7 +254,7 @@ def sec(z):
     """
     z = real_to_complex(z)
 
-    return AlComplex.from_python_complex(1/cm.cos(z.to_python_complex())**-1)
+    return AlComplex.from_python_complex(cm.cos(z.to_python_complex())**-1)
 
 
 def csc(z):
