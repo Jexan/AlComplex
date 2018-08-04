@@ -5,3 +5,5 @@ dist/*
 build/*
 
 mult_val_fun_plot.py
+
+htmlcov
