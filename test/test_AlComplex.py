@@ -16,6 +16,16 @@ class TestFuncs(unittest.TestCase):
 		self.assertEqual(a+b, c)
 		self.assertEqual(a-b, AlComplex(-1,1))
 
+	def test_AlComplex_use_j(self):
+		use_j()
+
+		self.assertEqual(str(a), '0.0 + 1.0j')
+		self.assertEqual(str(b), '1.0 + 0.0j')
+		self.assertEqual(str(c), '1.0 + 1.0j')
+
+		use_j(False)
+		self.assertEqual(str(a), '0.0 + 1.0i')
+
 	def test_AlComplex_multiplication(self):
 		self.assertEqual(d*d, AlComplex(-5,12))
 		self.assertEqual(C(1,0)*C(0,1), C(0,1))
