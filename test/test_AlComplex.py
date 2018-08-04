@@ -146,11 +146,15 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(cot(1+i), cos(1+i)/sin(1+i))
 		self.assertEqual(cot(1+i), csc(1+i)/sec(1+i))
 
-	def self_hyperbolic_trigonometric_sinh_cosh(self):
+	def test_hyperbolic_trigonometric_sinh_cosh_tanh(self):
 		self.assertEqual(-i*sinh(i*a), sin(a))
 		self.assertEqual(cos(b), cosh(i*b))
+
 		self.assertEqual(sinh(c), -i*sin(i*c))
 		self.assertEqual(cosh(d), cos(d*i))
+
+		self.assertEqual(tanh(0), 0)
+		self.assertEqual(tanh(4*i), sinh(4*i)/cosh(4*i))
 
 	def test_int_roots(self):
 		l1 = list(int_roots(1, 3))
