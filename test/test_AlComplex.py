@@ -91,6 +91,16 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(sqrt(4), 2)
 		self.assertEqual(sqrt(-1), 1.j)
 
+	def test_inverse(self):
+		self.assertEqual(inverse(a), 1/a)
+		self.assertEqual(inverse(a), a**-1)
+
+		self.assertEqual(inverse(C(2)), .5)
+		self.assertEqual(inverse(c), .5 - .5*i)
+
+		self.assertEqual(inverse(2), .5)
+		self.assertEqual(inverse(4.j), -0.25*1.j)
+
 	def test_exp(self):
 		self.assertEqual(exp(1), m.exp(1))
 		self.assertEqual(exp(0), 1)
