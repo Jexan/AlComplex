@@ -133,6 +133,19 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertEqual(tan(m.pi/4), 1)
 		self.assertEqual(tan(1+1.j), sin(1+1.j)/cos(1+1.j))
 
+	def test_trigonometric_sec_csc_cot(self):
+		self.assertEqual(sec(0), 1)
+		self.assertEqual(sec(m.pi), -1)
+		self.assertEqual(sec(4*i), 1/cos(4*i))
+		
+		self.assertEqual(csc(1.5*m.pi), -1)
+		self.assertEqual(csc(m.pi/2), 1)
+		self.assertEqual(csc(7+2*i), 1/sin(C(7,2)))
+		
+		self.assertEqual(cot(m.pi/4), 1)
+		self.assertEqual(cot(1+i), cos(1+i)/sin(1+i))
+		self.assertEqual(cot(1+i), csc(1+i)/sec(1+i))
+
 	def self_hyperbolic_trigonometric_sinh_cosh(self):
 		self.assertEqual(-i*sinh(i*a), sin(a))
 		self.assertEqual(cos(b), cosh(i*b))
