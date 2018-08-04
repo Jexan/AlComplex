@@ -7,24 +7,14 @@ c = AlComplex(1,1)
 d = AlComplex(2,3)
 e = AlComplex(1)
 
-class TestFuncs(unittest.TestCase):
-	def test_initiation_and_equality(self):
+class TestComplexNumberOperations(unittest.TestCase):
+	def test_initialization_and_equality(self):
 		self.assertEqual(C(0,1), a)
 		self.assertEqual(AlComplex(0,1), a)
-
+	
 	def test_AlComplex_addition(self):
 		self.assertEqual(a+b, c)
 		self.assertEqual(a-b, AlComplex(-1,1))
-
-	def test_AlComplex_use_j(self):
-		use_j()
-
-		self.assertEqual(str(a), '0.0 + 1.0j')
-		self.assertEqual(str(b), '1.0 + 0.0j')
-		self.assertEqual(str(c), '1.0 + 1.0j')
-
-		use_j(False)
-		self.assertEqual(str(a), '0.0 + 1.0i')
 
 	def test_AlComplex_multiplication(self):
 		self.assertEqual(d*d, AlComplex(-5,12))
@@ -52,9 +42,46 @@ class TestFuncs(unittest.TestCase):
 		
 		self.assertEqual(C(4)**1/2, 2)
 		
-	def test_polar_initialization(self):
-		self.assertEqual(AlComplex.polar(1,0), AlComplex(1,0))
-		self.assertEqual(AlComplex.polar(1,m.pi/2), i)
+class TestLoneMethods(unittest.TestCase):
+	def test_AlComplex_use_j(self):
+		use_j()
+
+		self.assertEqual(str(a), '0.0 + 1.0j')
+		self.assertEqual(str(b), '1.0 + 0.0j')
+		self.assertEqual(str(c), '1.0 + 1.0j')
+
+		use_j(False)
+		self.assertEqual(str(a), '0.0 + 1.0i')
+
+	def test_real(self):
+		self.assertEqual(real(a), 0)
+		self.assertEqual(real(b), 1)
+		self.assertEqual(real(c), 1)
+		self.assertEqual(real(d), 2)
+		self.assertEqual(real(e), 1)
+
+	def test_real_on_python_types(self):
+		self.assertEqual(real(1), 1)
+		self.assertEqual(real(-1), -1)
+
+		self.assertEqual(real(4.323), 4.323)
+		self.assertEqual(real(m.pi), m.pi)
+
+		self.assertEqual(real(1.j), 0)
+		self.assertEqual(real(4 + 3.j), 4)
+
+	def test_imag(self):
+		self.assertEqual(imaginary(a), 1)
+		self.assertEqual(imaginary(b), 0)
+		self.assertEqual(imaginary(c), 1)
+		self.assertEqual(imaginary(d), 3)
+		self.assertEqual(imaginary(e), 0)
+
+	def test_imag_on_python_types(self):
+		self.assertEqual(imaginary(1), 0)
+
+		self.assertEqual(imaginary(1.j), 1)
+		self.assertEqual(imaginary(4 + 3.j), 3)
 
 	def test_exp(self):
 		self.assertEqual(exp(1), m.exp(1))
