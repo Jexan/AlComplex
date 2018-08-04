@@ -189,19 +189,24 @@ class TestLoneMethods(unittest.TestCase):
 		l2 = list(int_roots(1.j, 2))
 		l5 = list(int_roots(i+2, 10))
 
-		with self.assertRaises(Exception):
-			list(int_roots(i, 0))
-
 		self.assertEqual(len(l1), 3)
 		self.assertEqual(len(l5), 10)
 		self.assertEqual(l1[0]**3, 1)
 		self.assertEqual(l2[1]**2, i)
 		self.assertEqual(l5[3]**10,i+2)
 
+	def test_int_roots_raises_ValueError(self):
+		with self.assertRaises(ValueError):
+			int_roots(i, 0)
+
 	def test_ln_n_branch(self):
 		self.assertEqual(ln_n_branch(1,0), 0)
 		self.assertEqual(ln_n_branch(exp(4+i), 0), 4+i)
 		self.assertEqual(ln_n_branch(exp(4+i), 1), 4+i+2*m.pi*i)
+
+	def test_ln_n_branch_raises_ValueError(self):
+		with self.assertRaises(ValueError):
+			ln_n_branch(i, 4.3)
 
 	def test_ln_values(self):
 		l1 = list(ln_values(i+12, 3, 7))
@@ -217,6 +222,14 @@ class TestLoneMethods(unittest.TestCase):
 		self.assertIn(m.pi/2*i, l3)
 		self.assertIn(5*m.pi/2*i, l3)
 
+	def test_ln_values_raises_ValueErrors(self):
+		with self.assertRaises(ValueError):
+			ln_values(i, "ay")
+		with self.assertRaises(ValueError):
+			ln_values(i, 2, 2.4)
+		with self.assertRaises(ValueError):
+			ln_values(i, m, 4)
+
 	def test_lone_methods_with_Python_number_types(self):
 		# Conjugate
 		self.assertEqual(conjugate(1), 1)
@@ -230,3 +243,12 @@ class TestLoneMethods(unittest.TestCase):
 		# Phase
 		self.assertEqual(phase(3), 0)
 		self.assertEqual(phase(1.j), m.pi/2)
+
+class TestAlComplexClassMethods(unittest.TestCase):
+	def test_to_float_raises_TypeError_if_imaginary_part_not_zero(self):
+		with self.assertRaises(TypeError):
+			d.to_float()	
+
+	def test_to_int_raises_TypeError_if_imaginary_part_not_zero(self):
+		with self.assertRaises(TypeError):
+			d.to_int()
