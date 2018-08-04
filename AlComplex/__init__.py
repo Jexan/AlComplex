@@ -542,9 +542,9 @@ def ln_values(z, n_start=0, n_finish=None):
         The last n in the formula above. If smaller than n_start, the n will be decreacing in the sequence
         given by the formula above
 
-    Yields
+    Returns
     ------
-    AlComplex
+    A generator that yields AlComplex
 
     Raises
     ------
@@ -565,14 +565,11 @@ def ln_values(z, n_start=0, n_finish=None):
 
     real = m.log(z.abs())
     arg = z.phase()
+    double_pi = 2*m.pi
 
-    counter = n_start
     step = 1 if (n_start <= n_finish) else -1
 
-    while counter != n_finish:
-        yield AlComplex(real, arg + 2*m.pi*counter)
-        counter += step
-
+    return (AlComplex(real, arg+ double_pi*n) for n in range(n_start, n_finish, step))
 
 def ln_n_branch(z, n):
     """ Gets the specific value of the complex logarithm in a certain branch.
