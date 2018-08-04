@@ -502,9 +502,14 @@ def int_roots(z, n, include_self=False):
     Yields
     ------
     AlComplex
+
+    Raises
+    ------
+    ValueError:
+        If n is not an integer greater than 0.
     """
     if not isinstance(n, int) or n <= 0:
-        raise TypeError('The n must be an integer greater than zero.')
+        raise ValueError('Expected second parameter to be an integer greater than zero. Got {} instead'.format(n))
 
     z = real_to_complex(z)
 
@@ -520,7 +525,7 @@ def int_roots(z, n, include_self=False):
         yield AlComplex.polar(magnitude, arg+k*growth)
 
 
-def ln_values(z, n_start=0, n_finish=m.inf):
+def ln_values(z, n_start=0, n_finish=None):
     """ Generates all the possible complex natural logarithm values between certain branches.
 
     The complex logarithm function is defined as ln(z) = log|z| + i(phase(z)+2pi*n), where n is a natural number.
@@ -540,10 +545,21 @@ def ln_values(z, n_start=0, n_finish=m.inf):
     Yields
     ------
     AlComplex
+
+    Raises
+    ------
+    ValueError:
+        If n_start is not an integer.
+        If n_finish is provided but is not an integer.
     """
-    if (not isinstance(n_start, int) or
-            (n_finish is not False and not isinstance(n_start, int))):
-            raise TypeError('The starting and finishing numbers must be integers.')
+    if not isinstance(n_start, int):
+        raise ValueError('Expected starting value to be an integer. Got {} instead'.format(n_start))
+    
+    if n_finish is not None:
+        if not isinstance(n_finish, int):
+            raise ValueError('Expected finishing value to be an integer. Got {} instead'.format(n_finish))
+    else:
+        n_finish = float('inf')
 
     z = real_to_complex(z)
 
@@ -568,12 +584,13 @@ def ln_n_branch(z, n):
     ----------
     z : Python numeric value or AlComplex
     n : int
+
     Yields
     ------
     AlComplex
     """
     if not isinstance(n, int):
-        raise TypeError('The n must be an integer.')
+        raise ValueError('Expected function argument to be an integer. Got {} instead'.format(n_start))
 
     return Ln(z) + 2*m.pi*n*i
 
@@ -693,7 +710,7 @@ class AlComplex():
         if self.imag == 0:
             return float(self.real)
         else:
-            raise TypeError('Cannot convert to float; imaginary part is not zero.')
+            raise TypeError('Cannot convert to float. Imaginary part is not zero.')
 
     def to_int(self):
         """ Converts an AlComplex number to an int if it only has a real part.
