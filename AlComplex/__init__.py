@@ -3,13 +3,14 @@
 It includes functions that are equivalent to the ones found in the cmath module. It also includes an
 AlComplex object, which wraps a complex number, with a better API.
 
-Every function and mathematical operation available are all compatible with Python own int, float and complex numeric types. 
+Every function and mathematical operation available is all compatible with Python own int, float and complex numeric types. 
 Also, all the overhead has been suppressed as much as possible.
 """
 
 import math as m
 import cmath as cm
 from itertools import chain
+from functools import wraps
 
 def use_j(option=True):
     """ Changes the letter used to represent the imaginary unit.
@@ -38,7 +39,29 @@ def real_to_complex(z):
     else:
         return z
 
-# Basic Properties
+
+def complexize_argument(fun):
+    """ Converts the first argument of the passed function an AlComplex, if it is not one already.
+
+        Meant to be used as a decorator.
+
+        Parameters
+        ----------
+        fun : The function to decorate
+
+        Returns
+        -------
+        The decorated function.
+
+    """
+    @wraps(fun)
+    def wrapper(z, *args):
+        z = real_to_complex(z)
+        return fun(z, *args)
+
+    return wrapper
+
+# --------- BASIC COMPLEX FUNCTIONS ---------
 
 
 def conjugate(z):
@@ -108,12 +131,12 @@ def imaginary(z):
         -------
         float
     """
-
     return z.imag
 
-# -------- Single valued Functions --------
+# --------- SINGLE VALUED FUNCTIONS ---------
 
 
+@complexize_argument
 def exp(z):
     """ An AlComplex compatible exponential function.
 
@@ -125,11 +148,10 @@ def exp(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.exp(z.to_python_complex()))
 
 
+@complexize_argument
 def Ln(z):
     """ An AlComplex compatible natural logarithm function. Gets the main value.
 
@@ -150,11 +172,10 @@ def Ln(z):
         ln_values
             Generates multiple values between given branches.
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.log(z.to_python_complex()))
 
 
+@complexize_argument
 def inverse(z):
     """ Gets the inverse of z.
 
@@ -168,11 +189,10 @@ def inverse(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return z**-1
 
 
+@complexize_argument
 def sqrt(z):
     """ Gets the square root of z.
 
@@ -186,13 +206,12 @@ def sqrt(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.sqrt(z.to_python_complex()))
 
-# ------- Trigonometric -----------
+# --------- TRIGONOMETRIC ---------
 
 
+@complexize_argument
 def sin(z):
     """ An AlComplex compatible sine function.
 
@@ -204,11 +223,10 @@ def sin(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.sin(z.to_python_complex()))
 
 
+@complexize_argument
 def cos(z):
     """ An AlComplex compatible cosine function.
 
@@ -220,11 +238,10 @@ def cos(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.cos(z.to_python_complex()))
 
 
+@complexize_argument
 def tan(z):
     """ An AlComplex compatible tangent function.
 
@@ -236,11 +253,10 @@ def tan(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.tan(z.to_python_complex()))
 
 
+@complexize_argument
 def sec(z):
     """ An AlComplex compatible secant function.
 
@@ -252,11 +268,10 @@ def sec(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.cos(z.to_python_complex())**-1)
 
 
+@complexize_argument
 def csc(z):
     """ An AlComplex compatible cosecant function.
 
@@ -268,11 +283,10 @@ def csc(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.sin(z.to_python_complex())**-1)
 
 
+@complexize_argument
 def cot(z):
     """ An AlComplex compatible cotangent function.
 
@@ -284,13 +298,12 @@ def cot(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.tan(z.to_python_complex())**-1)
 
-# --------- Hyperbolic Functions -----
+# --------- HYPERBOLIC FUNCTIONS ---------
 
 
+@complexize_argument
 def sinh(z):
     """ An AlComplex compatible hyperbolic sine function.
 
@@ -302,11 +315,10 @@ def sinh(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.sinh(z.to_python_complex()))
 
 
+@complexize_argument
 def cosh(z):
     """ An AlComplex compatible hyperbolic cosine function.
 
@@ -318,11 +330,10 @@ def cosh(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.cosh(z.to_python_complex()))
 
 
+@complexize_argument
 def tanh(z):
     """ An AlComplex compatible hyperbolic tangent function.
 
@@ -334,11 +345,10 @@ def tanh(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.tanh(z.to_python_complex()))
 
 
+@complexize_argument
 def sech(z):
     """ An AlComplex compatible hyperbolic secant function.
 
@@ -350,11 +360,10 @@ def sech(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.cosh(z.to_python_complex())**-1)
 
 
+@complexize_argument
 def csch(z):
     """ An AlComplex compatible hyperbolic cosecant function.
 
@@ -366,11 +375,10 @@ def csch(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.sinh(z.to_python_complex())**-1)
 
 
+@complexize_argument
 def coth(z):
     """ An AlComplex compatible hyperbolic cotangent function.
 
@@ -386,9 +394,10 @@ def coth(z):
 
     return AlComplex.from_python_complex(cm.tanh(z.to_python_complex())**-1)
 
-# ----- Inverse Functions -----
+# ----- INVERSE FUNCTIONS -----
 
 
+@complexize_argument
 def asin(z):
     """ An AlComplex compatible arcsine function. It gets the main value.
 
@@ -400,11 +409,10 @@ def asin(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.asin(z.to_python_complex()))
 
 
+@complexize_argument
 def acos(z):	
     """ An AlComplex compatible arccosine function. It gets the main value.
 
@@ -416,11 +424,10 @@ def acos(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.acos(z.to_python_complex()))
 
 
+@complexize_argument
 def atan(z):
     """ An AlComplex compatible arctangent function. It gets the main value.
 
@@ -432,11 +439,10 @@ def atan(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.atan(z.to_python_complex()))
 
 
+@complexize_argument
 def asinh(z):	
     """ An AlComplex compatible hyperbolic arcsine function. It gets the main value.
 
@@ -448,11 +454,10 @@ def asinh(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.asinh(z.to_python_complex()))
 
 
+@complexize_argument
 def acosh(z):
     """ An AlComplex compatible hyperbolic arccosine function. It gets the main value.
 
@@ -464,11 +469,10 @@ def acosh(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.acosh(z.to_python_complex()))
 
 
+@complexize_argument
 def atanh(z):
     """ An AlComplex compatible hyperbolic arctangent function. It gets the main value.
 
@@ -480,13 +484,12 @@ def atanh(z):
         -------
         AlComplex
     """
-    z = real_to_complex(z)
-
     return AlComplex.from_python_complex(cm.atanh(z.to_python_complex()))
 
-# Multiple Valued Functions
+# --------- MULTIPLE VALUED FUNCTIONS ---------
 
 
+@complexize_argument
 def int_roots(z, n, include_self=False):
     """ Generates all the complex n-roots of a number.
 
@@ -511,8 +514,6 @@ def int_roots(z, n, include_self=False):
     if not isinstance(n, int) or n <= 0:
         raise ValueError('Expected second parameter to be an integer greater than zero. Got {} instead'.format(n))
 
-    z = real_to_complex(z)
-
     polar = z.to_polar()
     magnitude = polar[0]**(1/n)
     arg = polar[1]/n
@@ -525,6 +526,7 @@ def int_roots(z, n, include_self=False):
     return chain(first_value, values_generator)
 
 
+@complexize_argument
 def ln_values(z, n_start=0, n_finish=None):
     """ Generates all the possible complex natural logarithm values between certain branches.
 
@@ -561,8 +563,6 @@ def ln_values(z, n_start=0, n_finish=None):
     else:
         n_finish = float('inf')
 
-    z = real_to_complex(z)
-
     real = m.log(z.abs())
     arg = z.phase()
     double_pi = 2*m.pi
@@ -578,6 +578,7 @@ def ln_values(z, n_start=0, n_finish=None):
             counter += step
     
     return values_generator()
+
 
 def ln_n_branch(z, n):
     """ Gets the specific value of the complex logarithm in a certain branch.
