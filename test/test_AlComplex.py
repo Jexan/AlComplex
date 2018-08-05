@@ -266,6 +266,16 @@ class TestAlComplexClassMethods(unittest.TestCase):
 		self.assertEqual(d.to_rect_coord(), (2, 3))
 		self.assertEqual(e.to_rect_coord(), (1, 0))
 
+	def test_to_int_method(self):
+		self.assertEqual(b.to_int(), 1)
+		self.assertEqual(C(4).to_int(), 4)
+		self.assertEqual(C(4.3).to_int(), 4)
+
+	def test_to_float_method(self):
+		self.assertEqual(b.to_float(), 1.0)
+		self.assertEqual(C(4).to_float(), 4.0)
+		self.assertEqual(C(4.3).to_float(), 4.3)
+
 	def test_to_float_raises_TypeError_if_imaginary_part_not_zero(self):
 		with self.assertRaises(TypeError):
 			d.to_float()	
