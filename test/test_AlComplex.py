@@ -288,6 +288,11 @@ class TestAlComplexClassMethods(unittest.TestCase):
 		self.assertEqual(d.conjugate(), C(2, -3))
 		self.assertEqual(e.conjugate(), C(1, 0))
 
+	def test_repr_method_is_just_str_method(self):
+		self.assertEqual(repr(a), str(a))
+		self.assertEqual(repr(b), str(b))
+		self.assertEqual(repr(c), str(c))
+
 	def test_to_float_raises_TypeError_if_imaginary_part_not_zero(self):
 		with self.assertRaises(TypeError):
 			d.to_float()	
