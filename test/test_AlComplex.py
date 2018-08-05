@@ -276,6 +276,11 @@ class TestAlComplexClassMethods(unittest.TestCase):
 		self.assertEqual(C(4).to_float(), 4.0)
 		self.assertEqual(C(4.3).to_float(), 4.3)
 
+	def test_arg_phase_angle_methods(self):
+		self.assertEqual(a.phase(), m.pi/2)
+		self.assertEqual(b.arg(), 0)
+		self.assertEqual(c.angle(), m.pi/4)
+
 	def test_to_float_raises_TypeError_if_imaginary_part_not_zero(self):
 		with self.assertRaises(TypeError):
 			d.to_float()	
