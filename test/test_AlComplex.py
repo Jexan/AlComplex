@@ -281,6 +281,13 @@ class TestAlComplexClassMethods(unittest.TestCase):
 		self.assertEqual(b.arg(), 0)
 		self.assertEqual(c.angle(), m.pi/4)
 
+	def test_conjugate_method(self):
+		self.assertEqual(a.conjugate(), C(0, -1))
+		self.assertEqual(b.conjugate(), C(1, 0))
+		self.assertEqual(c.conjugate(), C(1, -1))
+		self.assertEqual(d.conjugate(), C(2, -3))
+		self.assertEqual(e.conjugate(), C(1, 0))
+
 	def test_to_float_raises_TypeError_if_imaginary_part_not_zero(self):
 		with self.assertRaises(TypeError):
 			d.to_float()	
