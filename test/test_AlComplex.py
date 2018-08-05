@@ -12,6 +12,10 @@ class TestComplexNumberOperations(unittest.TestCase):
 	def test_initialization_and_equality(self):
 		self.assertEqual(C(0,1), a)
 		self.assertEqual(AlComplex(0,1), a)
+
+	def test_initialiation_with_al_complex_args(self):
+		self.assertEqual(C(b, e), 1 + i)
+		self.assertEqual(C(C(1.2), C(2.4)), 1.2 + 2.4*i)
 	
 	def test_AlComplex_addition(self):
 		self.assertEqual(a+b, c)

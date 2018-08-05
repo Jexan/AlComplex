@@ -623,16 +623,16 @@ class AlComplex():
         The imaginary part of the complex number
     """
     def __init__(self, r, i=0):
+        if isinstance(r, AlComplex):
+            r = r.to_float()
+        if isinstance(i, AlComplex):
+            i = i.to_float()
+
         # Since sin(pi) != 0 thanks to float precision, but a number very very small, we put this guard.
         if abs(r) < AlComplex.precision:
             r = 0
         if abs(i) < AlComplex.precision:
             i = 0
-
-        if isinstance(r, AlComplex):
-            r = r.to_float
-        if isinstance(i, AlComplex):
-            i = i.to_float
 
         self.imag = float(i)
         self.real = float(r)
