@@ -569,7 +569,15 @@ def ln_values(z, n_start=0, n_finish=None):
 
     step = 1 if (n_start <= n_finish) else -1
 
-    return (AlComplex(real, arg+ double_pi*n) for n in range(n_start, n_finish, step))
+    def values_generator():
+        counter = n_start
+        upper_bound = n_finish*step
+
+        while counter*step < upper_bound:
+            yield AlComplex(real, arg+ double_pi*counter)
+            counter += step
+    
+    return values_generator()
 
 def ln_n_branch(z, n):
     """ Gets the specific value of the complex logarithm in a certain branch.

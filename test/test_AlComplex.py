@@ -1,4 +1,5 @@
 import unittest
+from itertools import islice
 from AlComplex import * 
 
 a = AlComplex(0,1)
@@ -212,8 +213,11 @@ class TestLoneMethods(unittest.TestCase):
 		l1 = list(ln_values(i+12, 3, 7))
 		l2 = list(ln_values(i, 6, 2))
 		l3 = list(ln_values(i, -2, 3))
+		l4 = list(islice(ln_values(i, -2), 5))
 
 		self.assertEqual(len(l1), len(l2))
+		self.assertEqual(l3, l4)
+
 		for k in l1:
 			self.assertEqual(exp(k), i+12)
 
