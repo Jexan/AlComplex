@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setuptools.setup(
     name = 'AlComplex',
-    version = '1.0.3',
+    version = '1.0.4',
     packages = setuptools.find_packages(),
 
     author = 'Jean Franco Gómez',
